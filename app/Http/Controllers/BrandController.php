@@ -10,11 +10,19 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $brand = Brand::All();
-        return response()->json($brand);
+        $page = $request->input('limit', 5);
+        $query = $request->input('q');
+
+        if ($query) {
+            $brand  = Brand::where('name', 'like', '%' . $query . '%')->paginate($page);
+        } else {
+            $brand = Brand::All();
+        }
+
+        return response()->json(['product' => $brand]);
     }
 
     /**

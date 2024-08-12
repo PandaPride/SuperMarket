@@ -10,11 +10,19 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $category = Category::All();
-        return response()->json($category);
+        $page = $request->input('limit', 5);
+        $query = $request->input('q');
+
+        if ($query) {
+            $brand  = Category::where('name', 'like', '%' . $query . '%')->paginate($page);
+        } else {
+            $brand = Category::All();
+        }
+
+        return response()->json(['product' => $brand]);
     }
 
     /**
