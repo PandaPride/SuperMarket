@@ -15,8 +15,8 @@ class ProductController extends Controller
     {
         //
         $page = $request->input('limit', 5);
-        $query = $request->input('q');
-        $order = $request->input('ord');
+        $query = $request->input('query');
+        $order = $request->input('order');
         $sort = $request->input('sort');
 
         if ($query) {
